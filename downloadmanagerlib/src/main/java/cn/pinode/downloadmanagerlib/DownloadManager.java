@@ -10,7 +10,6 @@ import android.util.Log;
 import java.lang.ref.SoftReference;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import cn.pinode.DownloadService;
 import cn.pinode.downloadmanagerlib.interfaces.ResultCallback;
@@ -147,8 +146,8 @@ public class DownloadManager {
             }
 
             @Override
-            public void onResponse(DownloadTask response) {
-                super.onResponse(response);
+            public void onSuccess(DownloadTask task) {
+                super.onSuccess(task);
             }
 
             @Override
@@ -194,8 +193,8 @@ public class DownloadManager {
             }
 
             @Override
-            public void onResponse(DownloadTask response) {
-                super.onResponse(response);
+            public void onSuccess(DownloadTask task) {
+                super.onSuccess(task);
             }
 
             @Override
@@ -230,8 +229,17 @@ public class DownloadManager {
     }
 
 
-    public <T> ResultCallback<T> getDownloadStateById(int id){
+    public <T> ResultCallback<T> getDownloadStateCallBackById(int id){
         return stateCallBackMap.get(id);
+    }
+
+    public State getDownloadStateById(int id){
+        return DataHelper.getInstance(mContext).getDownloadTasks().get(id).getState();
+    }
+
+
+    public DownloadTask getDownloadTaskById(int id){
+        return DataHelper.getInstance(mContext).getDownloadTasks().get(id);
     }
 
     public ConcurrentMap<Integer, ResultCallback> getStateCallBackMap() {

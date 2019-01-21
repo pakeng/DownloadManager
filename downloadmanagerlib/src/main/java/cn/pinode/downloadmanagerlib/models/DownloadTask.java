@@ -2,12 +2,19 @@ package cn.pinode.downloadmanagerlib.models;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import cn.pinode.downloadmanagerlib.utils.FileProviderHelper;
+import cn.pinode.downloadmanagerlib.utils.UriDeserializer;
+import cn.pinode.downloadmanagerlib.utils.UriSerializer;
 
 /**
  * 下载任务
@@ -65,7 +72,8 @@ public class DownloadTask implements Comparable<DownloadTask> {
     }
 
     public void setDownloadDestination(Context context, File file) {
-        downloadDestination = FileProviderHelper.getUriForFile(context, file);
+//        downloadDestination = FileProviderHelper.getUriForFile(context, file);
+        downloadDestination = Uri.fromFile(file);
     }
 
     public void setTotalByte(long totalByte) {
@@ -111,5 +119,25 @@ public class DownloadTask implements Comparable<DownloadTask> {
         } else {
             return 0;
         }
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Uri.class, new UriSerializer())
+                .registerTypeAdapter(Uri.class, new UriDeserializer())
+                .create();
+        return gson.toJson(this);
+    }
+
+    public static DownloadTask fromJson(String json){
+        if (TextUtils.isEmpty(json))
+            return new DownloadTask();
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Uri.class, new UriSerializer())
+                .registerTypeAdapter(Uri.class, new UriDeserializer())
+                .create();
+        return gson.fromJson(json,DownloadTask.class);
     }
 }

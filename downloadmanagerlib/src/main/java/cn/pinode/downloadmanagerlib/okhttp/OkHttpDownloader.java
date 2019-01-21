@@ -2,6 +2,7 @@ package cn.pinode.downloadmanagerlib.okhttp;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
@@ -14,6 +15,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.pinode.downloadmanagerlib.Constants;
 import cn.pinode.downloadmanagerlib.DownloadManager;
 import cn.pinode.downloadmanagerlib.IDownloadExecutor;
 import cn.pinode.downloadmanagerlib.interfaces.ResultCallback;
@@ -171,7 +173,9 @@ public class OkHttpDownloader implements IDownloadExecutor {
             @Override
             public void run() {
                 if (callback != null) {
-                    callback.onResponse(object);
+                    callback.onSuccess(object);
+
+                    mContext.sendBroadcast(buildIntent(object));
                 }
             }
         });
@@ -203,6 +207,13 @@ public class OkHttpDownloader implements IDownloadExecutor {
             instance = new OkHttpDownloader(context);
         }
         return instance;
+    }
+
+    public Intent buildIntent(DownloadTask task){
+        Intent intent = new Intent();
+        intent.setAction(Constants.BROADCASTINTENT);
+        intent.putExtra(Constants.DOWNLOADTASK, task.toString());
+        return intent;
     }
 
 }

@@ -16,9 +16,9 @@ import android.support.annotation.CallSuper;
 
         //下载成功
         @CallSuper
-        public void onResponse(T response){
+        public void onSuccess(T task){
             if (callback!=null){
-                callback.onResponse(response);
+                callback.onSuccess(task);
             }
         }
 

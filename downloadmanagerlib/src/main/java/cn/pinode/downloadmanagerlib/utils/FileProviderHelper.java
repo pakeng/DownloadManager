@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.support.v4.content.FileProvider;
 
 import java.io.File;
+
+import cn.pinode.downloadmanagerlib.MFileProvider;
 
 public class FileProviderHelper
 {
@@ -21,7 +24,7 @@ public class FileProviderHelper
     }
 
     public static Uri getUriForFile24(Context context, File file) {
-        Uri fileUri = android.support.v4.content.FileProvider.getUriForFile(context,
+        Uri fileUri = MFileProvider.getUriForFile(context,
                 context.getPackageName() + ".fileprovider",
                 file);
         return fileUri;

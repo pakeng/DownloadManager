@@ -147,6 +147,7 @@ public class DataHelper {
         if (TextUtils.isEmpty(data)){
             nextId = 0;
         }else {
+            data = data.replaceAll("\r|\n", "");
             nextId = Integer.valueOf(data);
         }
     }
