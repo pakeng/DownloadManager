@@ -8,4 +8,8 @@
         name="myFile"
         path="myFile" />
 
+    <files-path
+        name="myFile"
+        path="myFile" />
+
 </paths>

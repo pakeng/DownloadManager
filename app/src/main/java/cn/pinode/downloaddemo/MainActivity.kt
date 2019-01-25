@@ -101,7 +101,7 @@ class MainActivity : Activity() {
 
 
     private fun download(url: String, nextAction: NextAction) {
-        val file = FileUtil.getDestinationInExternalPublicDir(this, "myFile")
+        val file = FileUtil.getDestinationDir(this, "myFile")
         val task = DownloadTask()
         task.setDownloadDestination(this, file)
         task.url = url

@@ -9,8 +9,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,7 +16,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import cn.pinode.downloadmanagerlib.DownloadManager;
 import cn.pinode.downloadmanagerlib.models.DownloadTask;
 import cn.pinode.downloadmanagerlib.models.State;
 import cn.pinode.io.FileUtil;
@@ -97,7 +94,7 @@ public class DataHelper {
     // 保存数据到本地文件
     public synchronized void saveData(){
         String data =  gson.toJson(downloadTaskSet);
-        File configDir = FileUtil.getDestinationInExternalPublicDir(mContext, CONFIG_DIR);
+        File configDir = FileUtil.getDestinationDir(mContext, CONFIG_DIR);
         File configFile = new File(configDir, CONFIG_FILE);
         File configFileOld = new File(configDir, CONFIG_FILE_OLD);
         // 备份文件
@@ -115,7 +112,7 @@ public class DataHelper {
 
 
     public synchronized void record_Id(){
-        File configDir = FileUtil.getDestinationInExternalPublicDir(mContext, CONFIG_DIR);
+        File configDir = FileUtil.getDestinationDir(mContext, CONFIG_DIR);
 
         File configFile = new File(configDir, CONFIG_FILE_ID_RECORDER);
         File configFileOld = new File(configDir, CONFIG_FILE_ID_RECORDER_OLD);
@@ -134,7 +131,7 @@ public class DataHelper {
     }
 
     public void resetId(){
-        File configDir = FileUtil.getDestinationInExternalPublicDir(mContext, CONFIG_DIR);
+        File configDir = FileUtil.getDestinationDir(mContext, CONFIG_DIR);
         File configFile = new File(configDir, CONFIG_FILE_ID_RECORDER);
         File configFileOld = new File(configDir, CONFIG_FILE_ID_RECORDER_OLD );
 
@@ -154,7 +151,7 @@ public class DataHelper {
 
     // 读取本地文件
     public synchronized void initData() {
-        File configDir = FileUtil.getDestinationInExternalPublicDir(mContext, CONFIG_DIR);
+        File configDir = FileUtil.getDestinationDir(mContext, CONFIG_DIR);
         File configFile = new File(configDir, CONFIG_FILE);
         File configFileOld = new File(configDir, CONFIG_FILE_OLD );
 

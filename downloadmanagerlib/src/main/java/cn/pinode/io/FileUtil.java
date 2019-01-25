@@ -2,6 +2,7 @@ package cn.pinode.io;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Environment;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -73,6 +74,38 @@ public class FileUtil {
             }
         }
         return file;
+    }
+
+    public static File getDestinationInPublicDir(Context context,String dirType) {
+        File file = new File(context.getFilesDir().getAbsoluteFile()+File.separator+dirType);
+        if (file == null) {
+            throw new IllegalStateException("Failed to get external storage public directory");
+        } else if (file.exists()) {
+            if (!file.isDirectory()) {
+                throw new IllegalStateException(file.getAbsolutePath() +
+                        " already exists and is not a directory");
+            }
+        } else {
+            if (!file.mkdirs()) {
+                throw new IllegalStateException("Unable to create directory: "+
+                        file.getAbsolutePath());
+            }
+        }
+        return file;
+    }
+
+
+    public static File getDestinationDir(Context context,String dirType) {
+        if (checkSdCard()){
+            return getDestinationInExternalPublicDir(context, dirType);
+        }else {
+            return getDestinationInPublicDir(context, dirType);
+        }
+    }
+
+
+    public static boolean checkSdCard() {
+        return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
 
     /**
@@ -225,7 +258,7 @@ public class FileUtil {
             e1.printStackTrace();
         }
         BufferedReader reader = new BufferedReader(inputStreamReader);
-        StringBuffer sb = new StringBuffer("");
+        StringBuffer sb = new StringBuffer();
         String line;
         try {
             while ((line = reader.readLine()) != null) {
