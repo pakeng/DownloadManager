@@ -167,7 +167,7 @@ public class DownloadManager {
      * @param callback 回调
      */
     public void downloadFile(String url, String destDir, ResultCallback callback) {
-        OkHttpDownloader.getInstance(mContext).HttpDownload(url, destDir, callback);
+        executor.HttpDownload(url, destDir, callback);
     }
 
     /**
@@ -176,7 +176,7 @@ public class DownloadManager {
      * @param callback 回调
      */
     public void downloadFile(DownloadTask downloadTask, ResultCallback callback) {
-        OkHttpDownloader.getInstance(mContext).HttpDownload(downloadTask, callback);
+        executor.HttpDownload(downloadTask, callback);
     }
 
     /**
@@ -184,7 +184,7 @@ public class DownloadManager {
      * @param downloadTask  下载任务
      */
     public void downloadFile(DownloadTask downloadTask) {
-        OkHttpDownloader.getInstance(mContext).HttpDownload(downloadTask.getUrl(), downloadTask.getDownloadDestination(),
+        executor.HttpDownload(downloadTask.getUrl(), downloadTask.getDownloadDestination(),
                 new ResultCallback<DownloadTask>(){
 
             @Override
@@ -225,7 +225,7 @@ public class DownloadManager {
     public void cancelDown(int id) {
         // TODO 根据ID查找到对应的下载任务然后取消
 
-        OkHttpDownloader.getInstance(mContext).cancelDown(id);
+        executor.cancelDown(id);
     }
 
 
