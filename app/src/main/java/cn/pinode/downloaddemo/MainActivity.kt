@@ -40,7 +40,8 @@ class MainActivity : Activity() {
         d1_tv.text = "0%"
         val d2_tv: TextView = findViewById(R.id.d2_tv)
         d2_tv.text = "0%"
-        d1.setOnClickListener {download(d1url, object :NextAction{
+        // fix address
+        d1.setOnClickListener {download(d3url, object :NextAction{
             override fun next(id: Int) {
                 if(DownloadManager.getInstance().getDownloadStateById(id)==State.DOWNLOADED){
                     onDownloadSuccess(DownloadManager.getInstance().getDownloadTaskById(id))
@@ -96,7 +97,8 @@ class MainActivity : Activity() {
 
     private fun onDownloadSuccess(task: DownloadTask) {
         // TODO install
-        APPUtil.installApkWithTask(this, task)
+        if(task.fileName.endsWith(".apk"))
+            APPUtil.installApkWithTask(this, task)
     }
 
 

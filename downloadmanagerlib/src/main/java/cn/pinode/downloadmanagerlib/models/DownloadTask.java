@@ -12,7 +12,6 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import cn.pinode.downloadmanagerlib.utils.FileProviderHelper;
 import cn.pinode.downloadmanagerlib.utils.UriDeserializer;
 import cn.pinode.downloadmanagerlib.utils.UriSerializer;
 
@@ -21,6 +20,7 @@ import cn.pinode.downloadmanagerlib.utils.UriSerializer;
  */
 public class DownloadTask implements Comparable<DownloadTask> {
 
+    private boolean canceled;
     private int taskId = -1;
     private long downloadedByte;
     private long totalByte;
@@ -139,5 +139,13 @@ public class DownloadTask implements Comparable<DownloadTask> {
                 .registerTypeAdapter(Uri.class, new UriDeserializer())
                 .create();
         return gson.fromJson(json,DownloadTask.class);
+    }
+
+    public boolean isCanceled() {
+        return canceled;
+    }
+
+    public void setCanceled(boolean canceled) {
+        this.canceled = canceled;
     }
 }

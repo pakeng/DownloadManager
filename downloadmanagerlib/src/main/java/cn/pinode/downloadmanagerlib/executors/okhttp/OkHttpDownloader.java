@@ -1,4 +1,4 @@
-package cn.pinode.downloadmanagerlib.okhttp;
+package cn.pinode.downloadmanagerlib.executors.okhttp;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -119,7 +119,7 @@ public class OkHttpDownloader implements IDownloadExecutor {
                         sendProgressCallBack(task.getTotalByte(), current, callback);
                     }
                     fos.flush();
-                    //如果下载文件成功，第一个参数为文件的绝对路径
+                    // 下载成功
                     sendSuccessResultCallback(task, callback);
                 } catch (IOException e) {
                     task.setState(State.PAUSE);

@@ -12,10 +12,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import cn.pinode.DownloadService;
+import cn.pinode.downloadmanagerlib.executors.HttpURLConnectionDownloader;
 import cn.pinode.downloadmanagerlib.interfaces.ResultCallback;
 import cn.pinode.downloadmanagerlib.models.DownloadTask;
 import cn.pinode.downloadmanagerlib.models.State;
-import cn.pinode.downloadmanagerlib.okhttp.OkHttpDownloader;
 import cn.pinode.downloadmanagerlib.utils.DataHelper;
 
 /**
@@ -66,7 +66,8 @@ public class DownloadManager {
 
     private void initContext() {
         mContext = binder.getService();
-        executor = OkHttpDownloader.getInstance(mContext);
+//        executor = OkHttpDownloader.getInstance(mContext);
+        executor = HttpURLConnectionDownloader.getInstance(mContext);
         if (initListener!=null){
             initListener.onSuccess(instance);
         }

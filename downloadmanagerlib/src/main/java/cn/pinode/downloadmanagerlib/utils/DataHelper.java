@@ -57,8 +57,8 @@ public class DataHelper {
 
     public int getNextDownloadId(){
         if (nextId<0)
-            resetId();
-        return nextId;
+            return resetId();
+        return ++nextId;
     }
 
 
@@ -71,6 +71,17 @@ public class DataHelper {
     public synchronized List<DownloadTask> putDownloadTask(DownloadTask downloadTask){
         downloadTaskSet.add(downloadTask);
         return getDownloadTasks();
+    }
+
+    public synchronized DownloadTask getDownloadTaskById(int ID){
+        DownloadTask downloadTask = null;
+        for (DownloadTask task: downloadTaskSet){
+            if (task.getTaskId() == ID){
+                downloadTask = task;
+                break;
+            }
+        }
+        return downloadTask;
     }
 
     public synchronized List<DownloadTask> removeDownloadTask(DownloadTask downloadTask){
@@ -130,7 +141,7 @@ public class DataHelper {
 
     }
 
-    public void resetId(){
+    public int resetId(){
         File configDir = FileUtil.getDestinationDir(mContext, CONFIG_DIR);
         File configFile = new File(configDir, CONFIG_FILE_ID_RECORDER);
         File configFileOld = new File(configDir, CONFIG_FILE_ID_RECORDER_OLD );
@@ -147,6 +158,7 @@ public class DataHelper {
             data = data.replaceAll("\r|\n", "");
             nextId = Integer.valueOf(data);
         }
+        return nextId;
     }
 
     // 读取本地文件
